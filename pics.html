@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>my babe — pics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --carousel-height: 360px; /* adjust height here */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      background: url("bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 40px;
+    }
+
+    .memories {
+      max-width: 920px;
+      margin: 20px auto 40px;
+      padding: 0 16px;
+    }
+
+    .memories h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    /* --- Carousel --- */
+    .carousel {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      height: var(--carousel-height);
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.15);
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.55s ease;
+    }
+
+    .memory {
+      flex: 0 0 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .memory img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;  /* ✅ show full image without zoom */
+      background: #000;     /* adds black bars if aspect ratio differs */
+      border-radius: 10px;
+      display: block;
+    }
+
+    .memory p {
+      margin: 6px 0 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: rgba(0,0,0,0.45);
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    /* arrows */
+    .carousel .btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      z-index: 999;    /* ✅ make arrows ALWAYS above everything */
+      transition: background 0.2s;
+    }
+    .carousel .btn:hover { background: rgba(0,0,0,0.75); }
+    .carousel .prev { left: 12px; }
+    .carousel .next { right: 12px; }
+
+    /* dots */
+    .dots {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      cursor: pointer;
+    }
+    .dot.active { background: #fff; transform: scale(1.2); }
+
+    @media (max-width: 520px) {
+      :root { --carousel-height: 260px; }
+      .carousel .btn { width: 38px; height: 38px; font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="memories">
+    <h2>my babygirl</h2>
+
+    <div class="carousel" id="carousel">
+      <div class="carousel-track" id="track">
+        <div class="memory">
+          <img src="pic1.jpg" alt="cute baby">
+          <p>cute baby</p>
+        </div>
+        <div class="memory">
+          <img src="pic3.jpg" alt="butiki babygirl">
+          <p>butiki babygirl</p>
+        </div>
+        <div class="memory">
+          <img src="pic2.jpg" alt="ngh">
+          <p>ngh</p>
+        </div>
+        <div class="memory">
+          <img src="pic4.jpg" alt="memory 4">
+          <p>NGH</p>
+        </div>
+        <div class="memory">
+          <img src="pic5.jpg" alt="memory 5">
+          <p>may i lick</p>
+        </div>
+        <div class="memory">
+          <img src="pic6.jpg" alt="memory 6">
+          <p>im looking respectfully</p>
+        </div>
+        <div class="memory">
+          <img src="pic7.jpg" alt="memory 7">
+          <p>angas ni idol</p>
+        </div>
+      </div>
+
+      <button class="btn prev" id="prevBtn">&#10094;</button>
+      <button class="btn next" id="nextBtn">&#10095;</button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+
+    <div style="margin-top:18px">
+      <a href="bday.html" style="color:#fff; text-decoration:none; background:rgba(255,255,255,0.15); padding:8px 12px; border-radius:8px;">⬅ go back</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const track = document.getElementById('track');
+      const slides = Array.from(track.children);
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsWrap = document.getElementById('dots');
+      let currentIndex = 0;
+      let isMoving = false;
+      const TRANSITION_TIME = 550;
+
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===0 ? ' active' : '');
+        d.dataset.index = i;
+        d.addEventListener('click', () => goToSlide(i));
+        dotsWrap.appendChild(d);
+      });
+      const dots = Array.from(dotsWrap.children);
+
+      function updateDots(){
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+      }
+
+      function goToSlide(index){
+        if(isMoving || index === currentIndex) return;
+        isMoving = true;
+        currentIndex = (index + slides.length) % slides.length;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        setTimeout(()=> isMoving = false, TRANSITION_TIME);
+      }
+
+      nextBtn.addEventListener('click', ()=> goToSlide(currentIndex + 1));
+      prevBtn.addEventListener('click', ()=> goToSlide(currentIndex - 1));
+
+
+      window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') goToSlide(currentIndex + 1);
+        if(e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+      });
+    })();
+  </script>
+</body>
+</html>
+

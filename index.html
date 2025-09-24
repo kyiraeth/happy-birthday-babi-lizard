@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Happy Birthday :) </title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: 'Georgia';
+      background: url("bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 50px;
+      overflow-x: hidden;
+      overflow-y: auto; 
+      scroll-behavior: smooth;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      color: white;
+      text-shadow: 0 0 8px #0f50bd, 0 0 15px #0f50bd;
+      animation: bounce 5s infinite;
+      position: relative;
+      z-index: 10;
+    }
+
+    h2 {
+      color: #fff;
+      margin-top: 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .section {
+      margin: 50px auto;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Snoopy floating effect */
+    .snoopy {
+      position: fixed; 
+      bottom: -100px;
+      width: 80px;
+      animation: floatUp 8s linear forwards;
+      pointer-events: none;
+      z-index: 0; /* behind text */
+      opacity: 0.8; 
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin: 10px 0;
+    }
+
+    /* Scroll arrows */
+    .arrow {
+      position: fixed;
+      right: 20px;
+      font-size: 2.5em;
+      color: white;
+      text-shadow: 0 0 8px black;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+    .arrow:hover {
+      transform: scale(1.2);
+    }
+    .arrow-up {
+      top: 20px;
+    }
+    .arrow-down {
+      bottom: 20px;
+    }
+	 a {
+		display: inline-block;
+		padding: 12px 25px;
+		margin-top: 15px;
+		background: linear-gradient(135deg, #0f50bd, #5a8dee);
+		color: white;
+		text-decoration: none;
+		border-radius: 30px;
+		font-weight: bold;
+		font-size: 1.1em;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+		transition: all 0.3s ease;
+	  }
+	a:hover {
+		background: linear-gradient(135deg, #5a8dee, #0f50bd);
+		transform: scale(1.1);
+		box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 12px #5a8dee;
+	  }
+
+     a:active {
+	    transform: scale(0.95);
+	  }
+  </style>
+</head>
+<body>
+  <h1> Happy Birthday, Mi Babi Lizard !</h1>
+  <h2>pakiss ako after you go through everything in this site :)</h2>
+
+  <div class="section">
+    <h2> let me make you feel beautiful </h2>
+    <a href="message.html"> open </a>
+  </div>
+
+  <div class="section">
+    <h2>my sweet angel</h2>
+    <a href="pics.html">open</a>
+  </div>
+
+  <div class="section">
+    <h2>my real one</h2>
+    <a href="music.html">i love you</a>
+  </div>
+
+  <div class="arrow arrow-up">&#9650;</div>
+  <div class="arrow arrow-down">&#9660;</div>
+
+  <script>
+    function createSnoopy() {
+      const snoopy = document.createElement("img");
+      snoopy.src = "snoopy.png"; 
+      snoopy.className = "snoopy";
+
+
+      snoopy.style.left = Math.random() * 100 + "vw";
+
+
+      let size = 50 + Math.random() * 50;
+      snoopy.style.width = size + "px";
+
+   
+      snoopy.style.animationDuration = (6 + Math.random() * 4) + "s";
+
+      document.body.appendChild(snoopy);
+
+      setTimeout(() => snoopy.remove(), 10000);
+    }
+
+    setInterval(createSnoopy, 1200);
+
+ 
+    const sections = document.querySelectorAll(".section");
+    let currentIndex = 0;
+
+    function scrollToSection(index) {
+      if (index >= 0 && index < sections.length) {
+        sections[index].scrollIntoView({ behavior: "smooth" });
+        currentIndex = index;
+      }
+    }
+
+    document.querySelector(".arrow-up").addEventListener("click", () => {
+      scrollToSection(currentIndex - 1);
+    });
+
+    document.querySelector(".arrow-down").addEventListener("click", () => {
+      scrollToSection(currentIndex + 1);
+    });
+
+
+    window.addEventListener("scroll", () => {
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      sections.forEach((sec, i) => {
+        const rect = sec.getBoundingClientRect();
+        const distance = Math.abs(rect.top);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = i;
+        }
+      });
+      currentIndex = closestIndex;
+    });
+  </script>
+</body>
+</html>
+
+

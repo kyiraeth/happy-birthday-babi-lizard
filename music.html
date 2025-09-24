@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Song</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia';
+      text-align: center;
+      background: url("bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 50px;
+    }
+
+    .music {
+      max-width: 700px;
+      margin: auto;
+      position: relative;
+    }
+
+    .music h2 {
+      font-family: 'Georgia';
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    /* Carousel core */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      padding: 25px;
+      box-sizing: border-box;
+    }
+
+    iframe {
+      border-radius: 12px;
+      width: 100%;
+      height: 352px;
+    }
+
+    p {
+      margin-top: 12px;
+      font-size: 1.1rem;
+    }
+
+    /* Arrows */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      color: white;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .arrow:hover {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    .back {
+      margin-top: 30px;
+    }
+
+    .back a {
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      background: rgba(0,0,0,0.4);
+      padding: 8px 14px;
+      border-radius: 10px;
+    }
+
+    .back a:hover {
+      background: rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="music">
+    <h2>you look like the real thing, and you are</h2>
+
+    <div class="carousel">
+      <div class="carousel-track">
+        
+        <div class="slide">
+          <iframe src="https://open.spotify.com/embed/track/73CKjW3vsUXRpy3NnX4H7F?utm_source=generator" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <p>you aint fake gang, i just like the song and it sounds like my love for you</p>
+        </div>
+
+        <div class="slide">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6oP8iOWmJkwsm4yjDpSbhv?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <p>who loved you first? sapakan kami (excluding your parents)</p>
+        </div>
+
+        <div class="slide">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4dtP86vkhzwNXCFpCtizce?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <p>i like this song</p>
+        </div>
+
+        <div class="slide">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/0Ik9LPqXs0DYConyjqvEFR?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <p>me nung di pa tayo pero napaka pafall mo</p>
+        </div>
+		
+		<div class="slide">
+         <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1yjY7rpaAQvKwpdUliHx0d?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <p>bakit nga ba patay na patay parin ako sayo kahit mag-iisang taon na tayo, love?</p>
+        </div>
+      </div>
+
+      <span class="arrow left">&#10094;</span>
+      <span class="arrow right">&#10095;</span>
+    </div>
+  </div>
+
+  <div class="back">
+    <a href="bday.html">⬅ go back</a>
+  </div>
+
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.arrow.right');
+    const prevButton = document.querySelector('.arrow.left');
+    let currentIndex = 0;
+
+    function updateSlide() {
+      track.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+    }
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlide();
+    });
+
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlide();
+    });
+  </script>
+</body>
+</html>
+
